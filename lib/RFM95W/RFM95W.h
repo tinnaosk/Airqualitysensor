@@ -8,6 +8,8 @@
 
 class RFM95W {
 public:
-    
+    RFM95W();
+
+    bool init();
 private:
 };
