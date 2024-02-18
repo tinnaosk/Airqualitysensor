@@ -23,13 +23,14 @@ uint8_t CalcCrc(uint8_t data[2]) {
              }
          }
       }
-      return crc;
+    return crc;
 }
 
 bool SEN55::init(void){
     reset();
     sendCommand(SEN55_START_MEAS);
     sleep_ms(30);
+    return true;
 }
 
 /// @brief Reset the SEN55 sensor
@@ -111,15 +112,15 @@ bool SEN55::read(SEN55_VALUES* values) {
     return true;
 }
 
-bool sendCommand(uint16_t command){
-    uint16_t buffer[2]{0};
+bool SEN55::sendCommand(uint16_t command){
+    uint8_t buffer[2]{0};
 
     buffer[0] = (command >> 8) & 0xFF00;
     buffer[1] = command & 0x00FF;
     return (i2c_write_timeout_us(_i2c, SEN55_ADDRESS, buffer, 2, false, 10000) == 2);
 }
-uint16_t readRegister(uint16_t reg_address){
-    uint16_t buffer[2];
+uint16_t SEN55::readRegister(uint16_t reg_address){
+    uint8_t buffer[2];
     
     buffer[0] = (reg_address >> 8) & 0xFF00;
     buffer[1] = reg_address & 0x00FF;

@@ -41,12 +41,13 @@ struct SEN55_VALUES {
 
 class SEN55 {
 public:
-    SEN55(i2c_inst_t *i2c, uint16_t addr = SEN55_DEFAULT_I2CADDR);
+    SEN55() {};
+    SEN55(i2c_inst_t *i2c, uint16_t addr = SEN55_DEFAULT_I2CADDR) : _i2c(i2c), SEN55_ADDRESS(addr) {};
     bool init(void);
 
     void reset(void);
     bool dataReady(void);
-    bool SEN55::read(SEN55_VALUES* values);
+    bool read(SEN55_VALUES* values);
 
 
 private:
