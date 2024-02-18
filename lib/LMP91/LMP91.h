@@ -5,14 +5,7 @@
  */
 #pragma once
 #include <hardware/i2c.h>
-
-const uint8_t LMP91_DEFAULT_I2CADDR = 0x90;
-
-const uint8_t LMP91_STATUS = 0x00;  // Power-on status 
-const uint8_t LMP91_LOCK = 0x01;    // Enables and disables writing of the TIACN and REFCN
-const uint8_t LMP91_TIACN = 0x10;   // Transimpedance gaind and the load resistance
-const uint8_t LMP91_REFCN = 0x11;   // Reference control register
-const uint8_t LMP91_MODE = 0x12;    // Mode register, configures the operation modes
+#include "LMP91_regs.h"
 
 class LMP91 {
 public:
@@ -21,11 +14,21 @@ public:
 
     void reset(void);
 
+    bool set_STATUS(STATUS status);
+    bool set_LOCK(LOCK lock);
+    bool set_TIA_GAIN(TIA_GAIN gain);
+    bool set_R_LOAD(R_LOAD load);
+    bool set_REF_SOURCE(REF_SOURCE source);
+    bool set_INT_Z(INT_Z internal);
+    bool set_BIAS_SIGN(BIAS_SIGN signal);
+    bool set_BIAS(BIAS bias);
+    bool set_FET_SHORT(FET_SHORT shorting);
+    bool set_OP_MODE(OP_MODE mode);
 
 private:
     i2c_inst_t* _i2c;
     uint8_t LMP91_ADDRESS;
 
-    bool sendCommand(uint8_t command);
-    uint8_t readRegister(uint8_t reg_address);
+    bool write_register(uint8_t reg, uint8_t data);
+    uint8_t read_register(uint8_t reg_address);
 };

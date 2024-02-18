@@ -2,6 +2,7 @@ add_library(LMP91 INTERFACE)
 
 target_sources(SEN55 INTERFACE
     ${CMAKE_CURRENT_LIST_DIR}/LMP91.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/LMP91_regs.h
 )
 
 target_include_directories(LMP91 INTERFACE ${CMAKE_CURRENT_LIST_DIR})
