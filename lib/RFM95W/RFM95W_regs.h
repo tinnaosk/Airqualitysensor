@@ -43,6 +43,16 @@ namespace RFM95W_REG {
     const uint8_t FIFO_RX_BYTE_ADDR         = (0x25);
     const uint8_t MODEM_CONFIG_3            = (0x26);
 
+    const uint8_t PPM_CORRECTION            = (0x27);
+    const uint8_t FEI_MSB                   = (0x28);
+    const uint8_t FEI_MID                   = (0x29);
+    const uint8_t FEI_LSB                   = (0x2a);
+    const uint8_t RSSI_WIDEBAND             = (0x2c);
+    const uint8_t DETECT_OPTIMIZE           = (0x31);
+    const uint8_t INVERT_IQ                 = (0x33);
+    const uint8_t DETECTION_THRESHOLD       = (0x37);
+    const uint8_t SYNC_WORD                 = (0x39);
+
     const uint8_t DIO_MAPPING_1             = (0x40);
     const uint8_t DIO_MAPPING_2             = (0x41);
     const uint8_t VERSION                   = (0x42);
@@ -57,17 +67,18 @@ namespace RFM95W_REG {
 };
 
 namespace RFM95W_OP_MODE {
-    const uint8_t LONG_RANGE_MODE   = (0x80);
-    const uint8_t ACCESS_SHARED_REG = (0x40);
-    const uint8_t MODE              = (0x07); /* CHECK THIS ONE OUT? */
-    const uint8_t SLEEP             = (0x00);
-    const uint8_t STDBY             = (0x01);
-    const uint8_t FSTX              = (0x02);
-    const uint8_t TX                = (0x03);
-    const uint8_t FSRX              = (0x04);
-    const uint8_t RXCONTINUOUS      = (0x05);
-    const uint8_t RXSINGLE          = (0x06);
-    const uint8_t CAD               = (0x07);
+    const uint8_t LONG_RANGE_MODE       = (0x80);
+    const uint8_t ACCESS_SHARED_REG     = (0x40);
+    const uint8_t LOW_FREQUENCY_MODE    = (0x08);
+    const uint8_t MODE                  = (0x07);
+    const uint8_t SLEEP                 = (0x00);
+    const uint8_t STDBY                 = (0x01);
+    const uint8_t FSTX                  = (0x02);
+    const uint8_t TX                    = (0x03);
+    const uint8_t FSRX                  = (0x04);
+    const uint8_t RXCONTINUOUS          = (0x05);
+    const uint8_t RXSINGLE              = (0x06);
+    const uint8_t CAD                   = (0x07);
 };
 
 namespace RFM95W_PA_CONFIG {
@@ -103,10 +114,18 @@ namespace RFM95W_OCP {
 };
 
 namespace RFM95W_LNA {
-    const uint8_t GAIN          = (0xe0);
-    const uint8_t BOOST         = (0x03);
-    const uint8_t BOOST_DEFAULT = (0x00);
-    const uint8_t BOOST_150_PC  = (0x11);
+    const uint8_t GAIN              = (0xe0);
+    const uint8_t GAIN_G1           = (0x20);
+    const uint8_t GAIN_G2           = (0x40);
+    const uint8_t GAIN_G3           = (0x60);
+    const uint8_t GAIN_G4           = (0x80);
+    const uint8_t GAIN_G5           = (0xa0);
+    const uint8_t GAIN_G6           = (0xc0);
+    const uint8_t BOOST_LF          = (0x18);
+    const uint8_t BOOST_LF_DEFAULT  = (0x00);
+    const uint8_t BOOST_HF          = (0x03);
+    const uint8_t BOOST_HF_DEFAULT  = (0x00);
+    const uint8_t BOOST_HF_150_PC   = (0x03);
 };
 
 namespace RFM95W_IRQ_FLAGS_MASK {
@@ -147,23 +166,31 @@ namespace RFM95W_HOP_CHANNEL {
 };
 
 namespace RFM95W_MODEM_CONFIG_1 {
-    const uint8_t BW                        = (0xc0);
-    const uint8_t BW_125_KHZ                = (0x00);
-    const uint8_t BW_250_KHZ                = (0x40);
-    const uint8_t BW_500_KHZ                = (0x80);
+    const uint8_t BW                        = (0xf0);
 
-    const uint8_t CODING_RATE               = (0x38);
-    const uint8_t CODING_RATE_4_5           = (0x00);
-    const uint8_t CODING_RATE_4_6           = (0x08);
-    const uint8_t CODING_RATE_4_7           = (0x10);
-    const uint8_t CODING_RATE_4_8           = (0x18);
+    const uint8_t BW_7_8KHZ                 = (0x00);
+    const uint8_t BW_10_4KHZ                = (0x10);
+    const uint8_t BW_15_6KHZ                = (0x20);
+    const uint8_t BW_20_8KHZ                = (0x30);
+    const uint8_t BW_31_25KHZ               = (0x40);
+    const uint8_t BW_41_7KHZ                = (0x50);
+    const uint8_t BW_62_5KHZ                = (0x60);
+    const uint8_t BW_125_KHZ                = (0x70);
+    const uint8_t BW_250_KHZ                = (0x80);
+    const uint8_t BW_500_KHZ                = (0x90);
 
-    const uint8_t IMPLICIT_HEADER_MODE_ON   = (0x04);
-    const uint8_t RX_PAYLOAD_CRC_ON         = (0x02),
-    const uint8_t LOW_DATA_RATE_OPTIMIZE    = (0x01);
+    const uint8_t CODING_RATE               = (0x0e);
+    const uint8_t CODING_RATE_4_5           = (0x02);
+    const uint8_t CODING_RATE_4_6           = (0x04);
+    const uint8_t CODING_RATE_4_7           = (0x06);
+    const uint8_t CODING_RATE_4_8           = (0x08);
+
+    const uint8_t IMPLICIT_HEADER_MODE_ON   = (0x01);
+    //const uint8_t RX_PAYLOAD_CRC_ON         = (0x02); // Should this be skipped?
+    //const uint8_t LOW_DATA_RATE_OPTIMIZE    = (0x01); // Should this be skipped?
 };
 
-namespace RM95W_MODEM_CONFIG_2 {
+namespace RFM95W_MODEM_CONFIG_2 {
     const uint8_t SPREADING_FACTOR          = (0xf0);
     const uint8_t SPREADING_FACTOR_64_CPS   = (0x60);
     const uint8_t SPREADING_FACTOR_128_CPS  = (0x70);
@@ -173,12 +200,30 @@ namespace RM95W_MODEM_CONFIG_2 {
     const uint8_t SPREADING_FACTOR_2048_CPS = (0xb0);
     const uint8_t SPREADING_FACTOR_4096_CPS = (0xc0);
 
-    const uint8_t RX_CONTINUOUS_MODE        = (0x08);
-    const uint8_t AGC_AUTO_ON               = (0x04);
+    const uint8_t TX_CONTINUOUS_MODE        = (0x08);
+    const uint8_t PAYLOAD_CRC_ON            = (0x04);
     const uint8_t SYM_TIMEOUT_MSB           = (0x03);
+};
+
+namespace RFM95W_MODEM_CONFIG_3 {
+    const uint8_t MOBILE_NODE               = (0x08);
+    const uint8_t LOW_DATA_RATE_OPTIMIZE    = (0x08);
+    const uint8_t AGC_AUTO_ON               = (0x04);
+};
+
+namespace RFM95W_TCXO {
+    const uint8_t INPUT_ON  = (0x10);
 };
 
 namespace RFM95W_PA_DAC {
     const uint8_t DISABLE                   = (0x04);
     const uint8_t ENABLE                    = (0x07);
+};
+
+enum class RFM95W_MODE : uint8_t {
+    idle = 0,
+    sleep,
+    rx,
+    tx,
+    cad
 };

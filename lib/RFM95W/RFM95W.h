@@ -6,9 +6,22 @@
 
 #pragma once
 
+#include "RFM95W_regs.h"
+#include <hardware/spi.h>
+
+/* TODO:
+ *  - Change setModemConfig to use better naming
+ *  - Change ModemConfigChoice to use better naming
+ *  - Find a better way to do the define stuff
+*/
+
+#define RFM95W_FXOSC 32000000.0f
+#define RFM95W_FSTEP (RFM95W_FXOSC / 524288)
+
 class RFM95W {
 public:
-    RFM95W();
+    RFM95W() {};
+    RFM95W(hardware_spi_t* spi, uint8_t cs_pin) : _spi(spi), _cs_pin(cs_pin) {};
 
     struct ModemConfig {
         uint8_t reg_1d;
@@ -24,42 +37,45 @@ public:
         Bw125Cr45Sf2048
     };
 
-    bool init();
+    void init();
+
+    void setMode(RFM95W_MODE mode);
+    void setTxPower(int8_t power, bool useRFO=false);
+    void setPreambleLength(uint16_t bytes);
+    bool setFrequency(float center);
+    void enableTCXO(bool enabled=true);
+    void setSpreadingFactor(uint8_t sf);
+    void setSignalBandwidth(long sbw);
+    void setLowDatarate();
+    void setCodingRate4(uint8_t denominator);
 
     // From RH_RF95 class
     bool printRegisters();
     void setModemRegister(const ModemConfig* config);
     bool setModemConfig(ModemConfigChoice index);
-    virtual bool available();
-    virtual bool recv(uint8_t* buf, uint8_t* len);
-    virtual bool send(const uint8_t* data, uint8_t len);
-    void setPreambleLength(uint16_t bytes);
-    virtual uint8_t maxMessageLength();
-    bool setFrequency(float centre);
-    void setModeIdle();
-    void setModeRx();
-    void setModeTx();
-    void setTxPower(int8_t power, bool useRFO=false);
-    virtual bool sleep();
-    virtual bool isChannelActive();
-    void enableTCXO(bool enabled=true);
+    bool available();
+    bool recv(uint8_t* buf, uint8_t* len);
+    bool send(const uint8_t* data, uint8_t len);
+    uint8_t maxMessageLength();
+    bool isChannelActive();
     int frequencyError();
     int lastSNR();
-    void setSpreadingFactor(uint8_t sf);
-    void setSignalBandwidth(long sbw);
-    void setCodingRate4(uint8_t denominator);
-    void setLowDatarate();
     void setPayloadCRC(bool enabled);
     uint8_t getDeviceVersion();
 
 private:
+    spi_inst_t* _spi;
+    uint8_t _cs_pin;
+    RFM95W_MODE _mode;
+    bool _usingHFport = false;
+
     bool writeRegister(uint8_t address, uint8_t data);
-    bool readRegister(uint8_t address, uint8_t* data);
+    uint8_t readRegister(uint8_t address);
 
     // From RH_RF95 class
     bool setupInterruptHandler();
     void handleInterrupt();
     void validateRxBuf();
     void clearRxBuf();
-    virtual bool modeWillChange(RHMode);
+    bool modeWillChange(RHMode);
 };
