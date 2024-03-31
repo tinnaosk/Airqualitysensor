@@ -48,6 +48,11 @@ public:
     void setSignalBandwidth(long sbw);
     void setLowDatarate();
     void setCodingRate4(uint8_t denominator);
+    int lastSNR();
+    uint8_t maxMessageLength();
+    int frequencyError();
+    
+    bool isChannelActive(); // Needs to be checked out, what is YIELD and _cad? We don't have an OS!
 
     // From RH_RF95 class
     bool printRegisters();
@@ -56,10 +61,6 @@ public:
     bool available();
     bool recv(uint8_t* buf, uint8_t* len);
     bool send(const uint8_t* data, uint8_t len);
-    uint8_t maxMessageLength();
-    bool isChannelActive();
-    int frequencyError();
-    int lastSNR();
     void setPayloadCRC(bool enabled);
     uint8_t getDeviceVersion();
 
@@ -68,6 +69,7 @@ private:
     uint8_t _cs_pin;
     RFM95W_MODE _mode;
     bool _usingHFport = false;
+    int8_t _lastSNR;
 
     bool writeRegister(uint8_t address, uint8_t data);
     uint8_t readRegister(uint8_t address);

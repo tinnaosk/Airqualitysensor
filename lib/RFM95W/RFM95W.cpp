@@ -136,7 +136,7 @@ void RFM95W::setSpreadingFactor(uint8_t sf) {
     }
 
     // Set spreading factor
-    writeRegister(RFM95W_REG::MODEM_CONFIG_2, (readRegister(RFM95W_REG::MODEM_CONFIG_2) & ~RFM95W_MODEM_CONFIG_2::SPREADING_FACTOR | sf);
+    writeRegister(RFM95W_REG::MODEM_CONFIG_2, (readRegister(RFM95W_REG::MODEM_CONFIG_2) & ~RFM95W_MODEM_CONFIG_2::SPREADING_FACTOR | sf));
 
     // Check if low data rate bit should be set or cleared
     setLowDatarate();
@@ -192,8 +192,48 @@ void RFM95W::setCodingRate4(uint8_t denominator) {
     writeRegister(RFM95W_REG::MODEM_CONFIG_1, (readRegister(RFM95W_REG::MODEM_CONFIG_1) & ~RFM95W_MODEM_CONFIG_1::CODING_RATE) | cr);
 }
 
+/// @brief Check if the channel is currently active
+/// @return True if channel is active, false if channel is not active
 bool RFM95W::isChannelActive() {
     if (_mode != RFM95W_MODE::cad) {
-        
+        writeRegister(RFM95W_REG::OP_MODE, RFM95W_OP_MODE::CAD);
+        writeRegister(RFM95W_REG::DIO_MAPPING_1, 0x80); // Interrrupt on CAD done
+        _mode = RFM95W_MODE::cad;
     }
+
+    while (_mode == RFM95W_MODE::cad)
+        YIELD; // Need to replace this with something else
+
+    return _cad;
+}
+
+/// @brief Get the last measured SNR
+/// @return The SNR in dB
+int RFM95W::lastSNR() {
+    return _lastSNR;
+}
+
+/// @brief Get the maximum allowable message length
+/// @return Message length in bytes
+uint8_t RFM95W::maxMessageLength() {
+    return (uint8_t)251;
+}
+
+/// @brief Get the frequency error
+/// @return Estimated center frequency offset in Hz of last received message
+int RFM95W::frequencyError() {
+    int32_t freqerror = 0;
+    freqerror = readRegister(RFM95W_REG::FEI_MSB);
+    freqerror <<= 8;
+    freqerror |= readRegister(RFM95W_REG::FEI_MID);
+    freqerror <<= 8;
+    freqerror |= readRegister(RFM95W_REG::FEI_LSB);
+
+    if (freqerror & 0x80000) freqerror |= 0xfff00000;
+
+    int error = 0;
+    float bw_tab[] = {7.8f, 10.4f, 15.6f, 20.8f, 31.25f, 31.7f, 62.5f, 125.0f, 250.0f, 500.0f};
+    uint8_t bwindex = readRegister(RFM95W_REG::MODEM_CONFIG_1) >> 4;
+    if (bwindex < (sizeof(bw_tab) / sizeof(float))) error = (float)freqerror * bw_tab[bwindex] * ((float)(1L << 24) / (float)RFM95W_FXOSC / 5000f);
+    return error;
 }
