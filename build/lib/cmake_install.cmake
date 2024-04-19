@@ -43,7 +43,8 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("C:/Users/Tinna/Documents/HI/Haust 2023/TÖV501M/Template/Template/build/lib/BME280/cmake_install.cmake")
   include("C:/Users/Tinna/Documents/HI/Haust 2023/TÖV501M/Template/Template/build/lib/SEN55/cmake_install.cmake")
   include("C:/Users/Tinna/Documents/HI/Haust 2023/TÖV501M/Template/Template/build/lib/LMP91/cmake_install.cmake")
-  include("C:/Users/Tinna/Documents/HI/Haust 2023/TÖV501M/Template/Template/build/lib/NO2/cmake_install.cmake")
+  include("C:/Users/Tinna/Documents/HI/Haust 2023/TÖV501M/Template/Template/build/lib/MCP3564R/cmake_install.cmake")
+  include("C:/Users/Tinna/Documents/HI/Haust 2023/TÖV501M/Template/Template/build/lib/SevSeg/cmake_install.cmake")
 
 endif()
 

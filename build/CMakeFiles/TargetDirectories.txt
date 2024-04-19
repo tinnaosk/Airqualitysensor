@@ -177,5 +177,7 @@ C:/Users/Tinna/Documents/HI/Haust 2023/TÖV501M/Template/Template/build/lib/SEN5
 C:/Users/Tinna/Documents/HI/Haust 2023/TÖV501M/Template/Template/build/lib/SEN55/CMakeFiles/rebuild_cache.dir
 C:/Users/Tinna/Documents/HI/Haust 2023/TÖV501M/Template/Template/build/lib/LMP91/CMakeFiles/edit_cache.dir
 C:/Users/Tinna/Documents/HI/Haust 2023/TÖV501M/Template/Template/build/lib/LMP91/CMakeFiles/rebuild_cache.dir
-C:/Users/Tinna/Documents/HI/Haust 2023/TÖV501M/Template/Template/build/lib/NO2/CMakeFiles/edit_cache.dir
-C:/Users/Tinna/Documents/HI/Haust 2023/TÖV501M/Template/Template/build/lib/NO2/CMakeFiles/rebuild_cache.dir
+C:/Users/Tinna/Documents/HI/Haust 2023/TÖV501M/Template/Template/build/lib/MCP3564R/CMakeFiles/edit_cache.dir
+C:/Users/Tinna/Documents/HI/Haust 2023/TÖV501M/Template/Template/build/lib/MCP3564R/CMakeFiles/rebuild_cache.dir
+C:/Users/Tinna/Documents/HI/Haust 2023/TÖV501M/Template/Template/build/lib/SevSeg/CMakeFiles/edit_cache.dir
+C:/Users/Tinna/Documents/HI/Haust 2023/TÖV501M/Template/Template/build/lib/SevSeg/CMakeFiles/rebuild_cache.dir

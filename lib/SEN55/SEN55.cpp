@@ -47,6 +47,9 @@ bool SEN55::dataReady(void) {
     return(readRegister(SEN55_READ_DATA_READY) == 1);
 }
 
+/// @brief 
+/// @param values 
+/// @return 
 bool SEN55::read(SEN55_VALUES* values) {
     uint8_t buffer[24]{0};
 
@@ -112,6 +115,9 @@ bool SEN55::read(SEN55_VALUES* values) {
     return true;
 }
 
+/// @brief 
+/// @param command 
+/// @return 
 bool SEN55::sendCommand(uint16_t command){
     uint8_t buffer[2]{0};
 
@@ -119,6 +125,10 @@ bool SEN55::sendCommand(uint16_t command){
     buffer[1] = command & 0x00FF;
     return (i2c_write_timeout_us(_i2c, SEN55_ADDRESS, buffer, 2, false, 10000) == 2);
 }
+
+/// @brief 
+/// @param reg_address 
+/// @return 
 uint16_t SEN55::readRegister(uint16_t reg_address){
     uint8_t buffer[2];
     

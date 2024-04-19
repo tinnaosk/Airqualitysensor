@@ -24,6 +24,7 @@
 
 class SCD30 {
 public:
+    SCD30() {};
     SCD30(i2c_inst_t* i2c, uint8_t addr = SCD30_DEFAULT_I2CADDR);
     bool init(void);
 
@@ -46,7 +47,7 @@ public:
     bool forceRecalibrationWithReference(uint16_t reference);
     uint16_t getForcedCalibrationWithReference(void);
 
-    float CO2, temperature, relative_humidity;
+    float co2, temp, hum;
 private:
     i2c_inst_t* _i2c;
     uint8_t SCD30_ADDRESS;

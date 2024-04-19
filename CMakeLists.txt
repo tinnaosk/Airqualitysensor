@@ -19,4 +19,5 @@ pico_add_extra_outputs(main)
 
 add_subdirectory(lib)
 
-target_link_libraries(main pico_stdlib hardware_i2c SCD30 BME280 SEN55 LMP91 NO2) # Insert libraries used in here
+target_link_libraries(main pico_stdlib hardware_i2c SCD30 BME280 SEN55 LMP91 MCP3564R SevSeg pico_stdlib) # Insert libraries used in here
+

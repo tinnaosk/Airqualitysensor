@@ -12,8 +12,6 @@ public:
     LMP91(i2c_inst_t* i2c, uint8_t addr = LMP91_DEFAULT_I2CADDR);
     bool init(void);
 
-    void reset(void);
-
     bool set_STATUS(STATUS status);
     bool set_LOCK(LOCK lock);
     bool set_TIA_GAIN(TIA_GAIN gain);

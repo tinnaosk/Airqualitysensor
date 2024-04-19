@@ -73,35 +73,35 @@ bool SCD30::read(void) {
         }
     }
 
-    uint32_t co2 = 0, temp = 0, hum = 0;
+    uint32_t _co2 = 0, _temp = 0, _hum = 0;
 
-    co2 |= buffer[0];
-    co2 <<= 8;
-    co2 |= buffer[1];
-    co2 <<= 8;
-    co2 |= buffer[3];
-    co2 <<= 8;
-    co2 |= buffer[4];
+    _co2 |= buffer[0];
+    _co2 <<= 8;
+    _co2 |= buffer[1];
+    _co2 <<= 8;
+    _co2 |= buffer[3];
+    _co2 <<= 8;
+    _co2 |= buffer[4];
 
-    temp |= buffer[6];
-    temp <<= 8;
-    temp |= buffer[7];
-    temp <<= 8;
-    temp |= buffer[9];
-    temp <<= 8;
-    temp |= buffer[10];
+    _temp |= buffer[6];
+    _temp <<= 8;
+    _temp |= buffer[7];
+    _temp <<= 8;
+    _temp |= buffer[9];
+    _temp <<= 8;
+    _temp |= buffer[10];
 
-    hum |= buffer[12];
-    hum <<= 8;
-    hum |= buffer[13];
-    hum <<= 8;
-    hum |= buffer[15];
-    hum <<= 8;
-    hum |= buffer[16];
+    _hum |= buffer[12];
+    _hum <<= 8;
+    _hum |= buffer[13];
+    _hum <<= 8;
+    _hum |= buffer[15];
+    _hum <<= 8;
+    _hum |= buffer[16];
 
-    memcpy(&CO2, &co2, sizeof(CO2));
-    memcpy(&temperature, &temp, sizeof(temperature));
-    memcpy(&relative_humidity, &hum, sizeof(relative_humidity));
+    memcpy(&co2, &_co2, sizeof(co2));
+    memcpy(&temp, &_temp, sizeof(temp));
+    memcpy(&hum, &_hum, sizeof(hum));
 
     return true;
 }
